@@ -31,7 +31,7 @@ class etatFraisController extends Controller
         if( session('visiteur')!= null){
             $visiteur = session('visiteur');
             $idVisiteur = $visiteur['id'];
-            $leMois = $request['lstMois']; 
+            $leMois = $request['lstMois'];
 		    $lesMois = PdoGsb::getLesMoisDisponibles($idVisiteur);
             $lesFraisForfait = PdoGsb::getLesFraisForfait($idVisiteur,$leMois);
 		    $lesInfosFicheFrais = PdoGsb::getLesInfosFicheFrais($idVisiteur,$leMois);
@@ -51,6 +51,16 @@ class etatFraisController extends Controller
                     ->with('lesFraisForfait',$lesFraisForfait)
                     ->with('visiteur',$visiteur);
             return $vue;
+        }
+        else{
+            return view('connexion')->with('erreurs',null);
+        }
+    }
+    function test(){
+        if (session('visiteur')!= null){
+            $visiteur = session(('visiteur'));
+            $idVisiteur = $visiteur['id'];
+            return view('test') -> with('visiteur',$visiteur);
         }
         else{
             return view('connexion')->with('erreurs',null);
